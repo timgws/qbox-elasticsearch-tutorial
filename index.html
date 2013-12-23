@@ -9,6 +9,10 @@
   <script src="js/controllers.js"></script>
 </head>
 	<body ng-controller='SearchController'>
+  <form ng-submit="search()">
+    <input ng-model='query' type='text'>
+    <button class="btn" type="submit">Search</button>
+  </form>
   <div ng-repeat="doc in results.hits">
     {{doc._source.name}}
   </div>

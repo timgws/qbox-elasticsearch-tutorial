@@ -7,7 +7,7 @@ myServices.service('es', ['esFactory',
   });
 }]);
 
-myServices.factory('searchService', ['es', function(es) {
+myServices.factory('searchService', ['es',  function(es) {
   return {
     textSearch: function(query){
       return es.search({
