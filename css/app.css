@@ -14,3 +14,7 @@
   margin: 0 auto;
 }
 
+.search-input {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
