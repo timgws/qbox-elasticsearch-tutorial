@@ -19,3 +19,4 @@
 { "index" : { "_index" : "disney", "_type" : "character", "_id" : "10" } }
 {"name": "Wreck-It Ralph","original_voice_actor": "John C. Reilly","animated_debut": "Wreck-It Ralph", "number": 0.34}
 
+/*curl -s -XPOST localhost:9200/_bulk --data-binary @disney-data; echo*/
