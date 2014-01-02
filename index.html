@@ -32,10 +32,10 @@
               <th>Original Voice Actor</th> 
             </thead>
             <tbody>
-              <tr ng-repeat="hit in hits.hits">
-                <td>{{hit._source.name}}</td>
-                <td>{{hit._source.animated_debut}}</td>
-                <td>{{hit._source.original_voice_actor}}</td>
+              <tr ng-repeat="doc in results">
+                <td>{{doc._source.name}}</td>
+                <td>{{doc._source.animated_debut}}</td>
+                <td>{{doc._source.original_voice_actor}}</td>
               </tr>
             </tbody>
           </table>

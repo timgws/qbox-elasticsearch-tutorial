@@ -5,7 +5,7 @@ var myControllers = angular.module('myControllers', []);
          $scope.search = function() {
            var hits = searchService.textSearch($scope.query || '*');
            hits.then(function(resp) {
-            $scope.hits = resp.body.hits;
+             $scope.results = resp.hits.hits;
            });
          };
 
