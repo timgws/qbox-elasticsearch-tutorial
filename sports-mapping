@@ -1,0 +1,30 @@
+http://sense.qbox.io/gist/f9dab4c4479652ce261919ff3b7bd8768fc9872a
+
+curl -XDELETE 'localhost:9200/sports/'
+
+curl -XPUT 'localhost:9200/sports/' -d '{
+   "mapping": {
+      "athlete": {
+         "properties": {
+            "birthdate": {
+               "type": "date",
+               "format": "dateOptionalTime"
+            },
+            "location": {
+               "type": "geo_point"
+            },
+            "name": {
+               "type": "string"
+            },
+            "rating": {
+               "type": "integer"
+            },
+            "sport": {
+               "type": "string"
+            }
+         }
+      }
+   }
+}'
+
+curl -s -XPUT localhost:9200/_bulk --data-binary @sports-data; echo

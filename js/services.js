@@ -9,12 +9,47 @@ myServices.service('es', ['esFactory',
 
 myServices.factory('searchService', ['es',  function(es) {
   return {
-    textSearch: function(query){
-      return es.search({
-        index: 'disney',
-        type: 'character',
-        q: query
-      })
+    textSearch: function(input){
+      if (typeof input === 'string')
+        {
+          return es.search({
+            index: 'sports',
+            type: 'athlete',
+            body: {
+              query: {
+                match:{
+                  name: input,
+                }
+              },
+              aggregations: {
+                sports: {
+                  terms: {
+                    field: 'sport'
+                  }
+                }
+              }
+            }
+          })
+        }
+        if (typeof input != 'string' || input == "" )
+          {
+          return es.search({
+            index: 'sports',
+            type: 'athlete',
+            body: {
+              query: {
+                match_all:{}
+              },
+              aggregations: {
+                sports: {
+                  terms: {
+                    field: 'sport'
+                  }
+                }
+              }
+            }
+          })
+        }
     }
   };
 }]);
