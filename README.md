@@ -1,19 +1,29 @@
-## Elasticsearch Tutorial 
+## Qbox Elasticsearch Tutorial 
+
+### Series Overview
+Qbox.io - Getting starting with Elasticsearch using Elasticsearch.js and
+Angular.js. This Epsiode #2 of a many part tutorial series from Qbox
+about Elasticsearch.  
+
+#### Episode Two 
+*
+*
+*
+*
+
+##### Visit http://blog.qbox.io/qbox-elasticsearch-tutorial-2 for more.
 
 ## Sense Gist
-http://sense.qbox.io/gist/f9dab4c4479652ce261919ff3b7bd8768fc9872a#
-
 Feel free to use this sense gist to quickly run the mapping and queries.
 Or make some changes, save it, and ask a question on the post!
 
+http://sense.qbox.io/gist/f9dab4c4479652ce261919ff3b7bd8768fc9872a#
 
 ## Settings
-
 curl -XPUT 'localhost:9200/sports/athlete/_settings' -d '{
 }'
 
 ## Mapping
-
 curl -XPUT 'localhost:9200/sports/athlete/_mapping' -d '{
   "athlete": {
     "properties": {
@@ -40,13 +50,4 @@ curl -XPUT 'localhost:9200/sports/athlete/_mapping' -d '{
 
 
 ## Bulk Index Command (inside of the repository)
-
 curl -s -XPUT localhost:9200/_bulk --data-binary @sports-data; echo
-
-
-## Overview
-
-Qbox.io - Getting starting with Elasticsearch using Elasticsearch.js and Angular.js.
-This project is a one of many part series including information and examples of displaying 
-and searching requests from elasticsearch. Visit blog.qbox.io for more
-
