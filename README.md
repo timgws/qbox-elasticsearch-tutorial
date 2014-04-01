@@ -1,39 +1,47 @@
 ## Elasticsearch Tutorial 
 
-Feel free to use this sense gist to quickly run the mapping
-and index all these documents onto whichever server you provide (localhost:9200 is the default)
-http://sense.qbox.io/gist/67142dd7e290e8d5c50901aefb3051c35b9f12a3
+## Sense Gist
+http://sense.qbox.io/gist/f9dab4c4479652ce261919ff3b7bd8768fc9872a#
 
-If you would rather put the mapping yourself and use the bulk index api
-run this mapping in your terminal. Then run the bulk api curl command below.
+Feel free to use this sense gist to quickly run the mapping and queries.
+Or make some changes, save it, and ask a question on the post!
 
-feel free to delete the index if you wish
 
-curl -XDELETE "http://localhost:9200/voice_acting/"
+## Settings
 
-curl -XPUT "http://localhost:9200/voice_acting/" -d'
-{
-  "mappings": {
-    "character": {
-      "properties":{
-        "release_date": {"type": "date", "format": "YYYY"},
-        "rating": {"type": "integer"},
-        "original_voice_actor":{
-            "type":"multi_field",
-            "fields":{
-                "original_voice_actor":{"type":"string", "index": "analyzed"},
-                "untouched":{"type": "string", "index": "not_analyzed"}
-            }
-        }
+curl -XPUT 'localhost:9200/sports/athlete/_settings' -d '{
+}'
+
+## Mapping
+
+curl -XPUT 'localhost:9200/sports/athlete/_mapping' -d '{
+  "athlete": {
+    "properties": {
+      "birthdate": {
+        "type": "date",
+          "format": "dateOptionalTime"
+      },
+      "location": {
+        "type": "geo_point"
+      },
+      "name": {
+        "type": "string"
+      },
+      "rating": {
+        "type": "integer"
+      },
+      "sport": {
+        "type": "string",
+        "index": "not_analyzed"
       }
     }
   }
 }'
 
 
-Bulk Index Command
+## Bulk Index Command (inside of the repository)
 
-curl -s -XPOST localhost:9200/_bulk --data-binary @voice-actor-data; echo
+curl -s -XPUT localhost:9200/_bulk --data-binary @sports-data; echo
 
 
 ## Overview
