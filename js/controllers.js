@@ -4,7 +4,7 @@ var myControllers = angular.module('myControllers', []);
         function($scope, es, searchService) {
          $scope.search = function() {
 
-          var hits = searchService.textSearch($scope.search.matchInput, $scope.search.termFilter, $scope.search.rangeFilter);
+          var hits = searchService.textSearch($scope.search.matchInput, $scope.search.termFilter);
 
            hits.then(function(resp) {
              $scope.results = resp.hits.hits;
