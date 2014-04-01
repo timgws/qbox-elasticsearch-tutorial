@@ -3,10 +3,12 @@ var myControllers = angular.module('myControllers', []);
 			myControllers.controller('SearchController', ['$scope', 'es','searchService',
         function($scope, es, searchService) {
          $scope.search = function() {
-           var hits = searchService.textSearch($scope.input);
+
+          var hits = searchService.textSearch($scope.search.matchInput, $scope.search.termFilter, $scope.search.rangeFilter);
+
            hits.then(function(resp) {
              $scope.results = resp.hits.hits;
-             $scope.sports = resp.aggregations.sports.buckets;
+             $scope.sports = ['Baseball', 'Football','Hockey','Basketball', 'Golf']
            });
          };
 
@@ -14,6 +16,3 @@ var myControllers = angular.module('myControllers', []);
           $scope.search();
         });
 			}]);
-
-
-

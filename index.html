@@ -15,7 +15,7 @@
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
           <form class="input-group search-input" ng-submit="search()">
-            <input class="form-control" ng-model='input' type='text'>
+            <input class="form-control" ng-model='search.matchInput' type='text'>
             <span class="input-group-btn">
               <button class="btn btn-default" id='searchBtn' type="submit">Search</button>
             </span>
@@ -25,34 +25,39 @@
 
       <div class="row">
         <div class="col-md-6 col-md-offset-2">
-          <table id="white-background" class="table table-bordered">
-            <thead>
-              <th>Name</th> 
-              <th>Birthdate</th> 
-              <th>Sport</th>
-              <th>Rating</th> 
-              <th>Location</th> 
-            </thead>
-            <tbody>
-              <tr ng-repeat="doc in results">
-                <td>{{doc._source.name}}</td>
-                <td>{{doc._source.birthdate}}</td>
-                <td>{{doc._source.sport}}</td>
-                <td>{{doc._source.rating}}</td>
-                <td>{{doc._source.location}}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-responseive">
+            <table id="white-background" class="table table-bordered">
+              <thead>
+                <th>Name</th> 
+                <th>Birthdate</th> 
+                <th>Sport</th>
+                <th>Rating</th> 
+                <th>Location</th> 
+              </thead>
+              <tbody>
+                <tr ng-repeat="doc in results">
+                  <td>{{doc._source.name}}</td>
+                  <td>{{doc._source.birthdate}}</td>
+                  <td>{{doc._source.sport}}</td>
+                  <td>{{doc._source.rating}}</td>
+                  <td>{{doc._source.location}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+
         <div class="col-md-2">
-          <table id="white-background" class="table tabl-bordered">
-            <thead>
-              <th>Sport</th>
-            </thead>
-            <tbody ng-repeat="doc in sports">
-              <td>{{doc.key}}</td>
-            </tbody>
-          </table>
+          <div class="table-responseive">
+            <table id="white-background" class="table table-bordered">
+              <tbody ng-repeat="doc in sports">
+                <tr>
+                  <td><input type="radio" ng-model="search.termFilter" ng-change="search()" value="{{doc}}"></td>
+                  <td>{{doc}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
