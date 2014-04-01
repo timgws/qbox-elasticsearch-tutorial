@@ -6,10 +6,10 @@ Angular.js. This Epsiode #2 of a many part tutorial series from Qbox
 about Elasticsearch.  
 
 #### Episode Two 
-*
-*
-*
-*
+* Query DSL
+* Searching Elasticsearch 
+* Match queries
+* Filtered Queries
 
 ##### Visit http://blog.qbox.io/qbox-elasticsearch-tutorial-2 for more.
 
