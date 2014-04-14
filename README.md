@@ -1,35 +1,72 @@
 ## Qbox Elasticsearch Tutorial 
 
 ### Series Overview
-Qbox.io - Getting starting with Elasticsearch using Elasticsearch.js and
-Angular.js. This Epsiode #2 of a many part tutorial series from Qbox
-about Elasticsearch.  
+Qbox.io - Getting started with Elasticsearch using Elasticsearch.js and
+Angular.js  
 
-#### Episode Two 
-* Query DSL
-* Searching Elasticsearch 
-* Match queries
-* Filtered Queries
+#### Episode Three 
+* Importing Documents
+* Settings
+* Analyzers 
+* Unstructed Search
 
-##### Visit http://blog.qbox.io/qbox-elasticsearch-tutorial-2 for more.
+##### Visit http://blog.qbox.io/qbox-elasticsearch-tutorial-3 for more.
 
 ## Sense Gist
-Feel free to use this sense gist to quickly run the mapping and queries.
-Or make some changes, save it, and ask a question on the post!
+Feel free to use our sense gist to send your mapping and queries, Or ask a question on the post!
+sense.qbox.io
 
-http://sense.qbox.io/gist/f9dab4c4479652ce261919ff3b7bd8768fc9872a#
 
 ## Settings
-curl -XPUT 'localhost:9200/sports/athlete/_settings' -d '{
+curl -XPUT 'localhost:9200/sports' -d '{
+  "settings": {
+    "analysis": {
+      "filter": {
+        "nGram_filter": {
+          "type": "nGram",
+            "min_gram": 2,
+            "max_gram": 20,
+            "token_chars": [
+              "letter",
+            "digit",
+            "punctuation",
+            "symbol"
+              ]
+        }
+      },
+        "analyzer": {
+          "nGram_analyzer": {
+            "type": "custom",
+            "tokenizer": "whitespace",
+            "filter": [
+              "lowercase",
+            "asciifolding",
+            "nGram_filter"
+              ]
+          },
+          "whitespace_analyzer": {
+            "type": "custom",
+            "tokenizer": "whitespace",
+            "filter": [
+              "lowercase",
+            "asciifolding"
+              ]
+          }
+        }
+    }
+  }
 }'
 
 ## Mapping
 curl -XPUT 'localhost:9200/sports/athlete/_mapping' -d '{
-  "athlete": {
+  "_all":{
+    "index_analyzer": "nGram_analyzer",
+      "search_analyzer": "whitespace_analyzer"
+  },
     "properties": {
       "birthdate": {
         "type": "date",
-          "format": "dateOptionalTime"
+        "format": "dateOptionalTime"
       },
       "location": {
         "type": "geo_point"
@@ -45,9 +82,9 @@ curl -XPUT 'localhost:9200/sports/athlete/_mapping' -d '{
         "index": "not_analyzed"
       }
     }
-  }
 }'
 
-
 ## Bulk Index Command (inside of the repository)
-curl -s -XPUT localhost:9200/_bulk --data-binary @sports-data; echo
+  After you've installed ruby v2.0.0 run
+
+  ruby athlete-import.rb

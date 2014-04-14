@@ -48,17 +48,26 @@
         </div>
 
         <div class="col-md-2">
-          <div class="table-responseive">
-            <table id="white-background" class="table table-bordered">
-              <tbody ng-repeat="doc in sports">
-                <tr>
-                  <td><input type="radio" ng-model="search.termFilter" ng-change="search()" value="{{doc}}"></td>
-                  <td>{{doc}}</td>
-                </tr>
-              </tbody>
-            </table>
+           <div class="panel">
+              <div ng-repeat="doc in sport">
+                <input type="radio" ng-model="search.sportFilter" ng-change="search()" value="{{doc.key}}">
+                {{doc.key}}
+                {{doc.doc_count}}
+              </div>
+            </div>
+
+          <div class="panel">
+            <select class="dropdown" ng-options="doc.key_as_string for doc in age track by doc.key" ng-model="search.ageFilterFrom" ng-change="search()">
+            </select>
+            From
           </div>
+
+            <div class="panel">
+              <select class="dropdown" ng-options="doc.key_as_string for doc in age track by doc.key" ng-model="search.ageFilterTo" ng-change="search()"></select>
+                To
+            </div>
         </div>
+
       </div>
     </div>
 	</body>
