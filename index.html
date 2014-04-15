@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html ng-app='myApp' lang="en">
-<head>
-	<title>Qbox Tutorial</title>
-  <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <script src="lib/angular.min.js"></script>
-  <script src="lib/elasticsearch.angular.min.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/services.js"></script>
-  <script src="js/controllers.js"></script>
-</head>
-	<body id="blue-background" ng-controller='SearchController'>
+  <head>
+    <title>Qbox Tutorial</title>
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/elasticsearch.angular.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controllers.js"></script>
+  </head>
+  <body id="blue-background" ng-controller='SearchController'>
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -48,28 +48,18 @@
         </div>
 
         <div class="col-md-2">
-           <div class="panel">
-              <div ng-repeat="doc in sport">
-                <input type="radio" ng-model="search.sportFilter" ng-change="search()" value="{{doc.key}}">
-                {{doc.key}}
-                {{doc.doc_count}}
-              </div>
-            </div>
-
-          <div class="panel">
-            <select class="dropdown" ng-options="doc.key_as_string for doc in age track by doc.key" ng-model="search.ageFilterFrom" ng-change="search()">
-            </select>
-            From
+          <div class="table-responseive">
+            <table id="white-background" class="table table-bordered">
+              <tbody ng-repeat="doc in sports">
+                <tr>
+                  <td><input type="radio" ng-model="search.termFilter" ng-change="search()" value="{{doc}}"></td>
+                  <td>{{doc}}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-
-            <div class="panel">
-              <select class="dropdown" ng-options="doc.key_as_string for doc in age track by doc.key" ng-model="search.ageFilterTo" ng-change="search()"></select>
-                To
-            </div>
         </div>
-
       </div>
     </div>
-	</body>
+  </body>
 </html>
-

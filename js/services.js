@@ -9,81 +9,35 @@ myServices.service('es', ['esFactory',
 
                    myServices.factory('searchService', ['es',  function(es) {
                      return {
-                       textSearch: function(matchInput, sportFilter, ageFilterTo, ageFilterFrom){
+                       textSearch: function(matchInput, termFilter){
 
                          var querySearch = {
-                             index: 'sports',
-                             type: 'athlete',
-                             size: 22,
-                             body:{}
-                           };
-
-
-
-                         if (matchInput) {
-                           querySearch.body.query = {match:{_all:{query: matchInput, operator: 'and'}}};
-                         } else {
-                           querySearch.body.query = {match_all:{}};
-                         }
-
-                         if (sportFilter){
-                           querySearch.body.query = {filtered:{filter:{bool:{must:{term:{sport: sportFilter}}}}}};
-                           querySearch.body.query.filtered.query = {match_all:{}};
-                         }
-
-                         if (ageFilterFrom){
-                           querySearch.body.query = {filtered:{filter:{bool:{must:{range:{birthdate:{gte: ageFilterFrom.key_as_string}}}}}}};
-                           querySearch.body.query.filtered.query = {match_all:{}};
-                         }
-                         
-                         if (ageFilterTo){
-                           querySearch.body.query = {filtered:{filter:{bool:{must:{range:{birthdate:{lte: ageFilterTo}}}}}}};
-                           querySearch.body.query.filtered.query = {match_all:{}};
-                         }
-
-                         if (ageFilterTo && ageFilterFrom){
-                           querySearch.body.query = {filtered:{filter:{bool:{must:{range:{birthdate:{gte: ageFilterFrom.key_as_string, lte: ageFilterTo.key_as_string}}}}}}};
-                           querySearch.body.query.filtered.query = {match_all:{}};
-                         }
-
-                         if (sportFilter && matchInput) {
-                           querySearch.body.query = {filtered:{filter:{bool:{must:{term:{sport: sportFilter}}}}}};
-                           querySearch.body.query.filtered.query = {match:{_all:{query: matchInput, operator: 'and'}}};
-                         }
-
-                         return es.search(querySearch);
-                       },
-
-                       aggSearch: function(matchInput){
-
-                         var sportsAgg = {
-                             index: 'sports',
-                             type: 'athlete',
-                             size: 20,
-                             body:{
-                               aggs:{
-                                 sport:{
-                                   terms:{field: 'sport'}
+                           index: 'sports',
+                           type: 'athlete',
+                           size: 22,
+                           body:{
+                             query:{
+                               filtered:{
+                                 filter:{
                                  },
-                                 age:{
-                                   date_histogram:{
-                                     field: 'birthdate',
-                                     post_offset: '24m',
-                                     interval: 'year',
-                                     format: 'YYYY-MM-dd'
-                                   }
+                                 query:{
                                  }
                                }
                              }
+                           }
                          };
 
                          if (matchInput) {
-                           sportsAgg.body.query = {match:{_all:{query: matchInput, operator: 'and'}}};
+                           querySearch.body.query.filtered.query.match = {name:{query: matchInput, operator: 'and'}};
                          } else {
-                           sportsAgg.body.query = {match_all:{}};
+                           querySearch.body.query.filtered.query.match_all = {};
                          }
 
-                         return es.search(sportsAgg);
+                         if (termFilter) {
+                           querySearch.body.query.filtered.filter.bool = {must:{term:{sport: termFilter}}};
+                         }
+
+                         return es.search(querySearch)
                        }
                      }
                    }]);
