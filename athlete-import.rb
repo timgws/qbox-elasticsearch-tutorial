@@ -1,38 +1,34 @@
+require 'elasticsearch'
+require 'json'
 
-require 'tire'
+CLUSTER_ENDPOINT = 'localhost:9200'
+INDEX_NAME = 'sports'
+TYPE_NAME = 'athlete'
+DATAFILE = File.read("new-sports-data.json")
+PER_PAGE = 1000
+TOTAL_DOCS = 4100
 
-DATAFILE = "new-sports-data.json"
+client = Elasticsearch::Client.new(hosts: CLUSTER_ENDPOINT)
 
-index_name = "sports"
-type_name = "athlete"
+data = JSON.parse(DATAFILE)
+avg_runtime = 1
 
+total_pages = TOTAL_DOCS / PER_PAGE
+page = 1
 
-begin
-  puts "Reading file: #{DATAFILE}..."
+while page <= total_pages
+puts "Fetching and indexing page #{page} of #{total_pages}..."
 
-  raw = File.read(DATAFILE)
+now = Time.now
 
-  puts "Parsing..."
+bulk_body = data.map do |doc|
+  [
+    { index: { _index: INDEX_NAME, _type: TYPE_NAME}},
+    doc
+  ]
+end.flatten
 
-  json_data = JSON.parse(raw)
+bulk_resp = client.bulk(body: bulk_body)
 
-  puts "#{json_data.count} data points in file"
-
-  Tire.configure do
-    url "localhost:9200"
-  end
-
-  json_data.each_slice(1_000).with_index do |chunk, i|
-    data = chunk.map { |u| u.merge("type" => type_name)}
-
-    puts "  importing chunk #{i}..."
-    Tire.index(index_name) { import(data) }
-  end
-
-rescue Exception=>e
-  p e
+page += 1
 end
-
-puts "Done"
-
-
